@@ -3,6 +3,7 @@ from django.db import models
 
 
 class Product(models.Model):
+    source_url = models.URLField(max_length=1000, blank=True)
     title = models.TextField()
     color = models.CharField(
         max_length=100,

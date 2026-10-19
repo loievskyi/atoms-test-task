@@ -1,5 +1,7 @@
 """
-This file stores selectors for scraping data products.
+Product page XPath selectors for parsing specific website structure
+Extracts: product title, price variants (regular/discount/promo),
+images, product code, specification container, and customer reviews count
 """
 
 from .schemas import (

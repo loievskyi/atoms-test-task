@@ -1,3 +1,10 @@
+"""
+Selenium-based scraper for JavaScript-heavy pages
+Handles: search query automation, dynamic content loading
+Extracts product data: title, prices, images, code, reviews, specifications
+Flow: search query → navigate pages (only first page) → parse details → save to DB
+"""
+
 import pprint
 import re
 import time

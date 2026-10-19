@@ -1,3 +1,9 @@
+"""
+BeautifulSoup-based web scraper for static HTML parsing
+Extracts product data: title, prices, images, code, reviews, specifications
+Flow: download HTML via requests → parse with BeautifulSoup → extract fields → save to DB
+"""
+
 import re
 from pprint import pprint
 

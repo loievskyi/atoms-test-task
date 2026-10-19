@@ -77,6 +77,21 @@ uv run python braincomua_project/manage.py runserver
 
 ## 9. Run the scraper
 
+**Note:** Before running a scraper, make sure you have loaded the environment variables as described in Step 5:
+```shell
+set -a && source .env && set +a
+```
+
+### Requests
+
+Run the scraper implemented with requests and BeautifulSoup4:
+```shell
+PYTHONPATH="$(pwd)" uv run python modules/bs4_scraper.py
+```
+
+### Selenium
+
+Run the Selenium scraper:
 ```shell
 PYTHONPATH="$(pwd)" uv run python modules/selenium_scraper.py
 ```

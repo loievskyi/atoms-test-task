@@ -12,6 +12,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
+from modules.base_parser import Parser
 from modules.load_django import *  # type: ignore
 from modules.selectors_schema import (
     product_selectors,
@@ -22,7 +23,7 @@ from modules.selectors_schema.xpath_selectors import list_selectors
 from parser_app.models import Product
 
 
-class SeleniumParser:
+class SeleniumScraper(Parser):
     def __init__(self, driver: WebDriver):
         self._driver = driver
         self.product_data: dict | None = None
@@ -124,20 +125,6 @@ class SeleniumParser:
         except (NoSuchElementException, AttributeError, EmptyData):
             return None
 
-    def _get_diagonal_inches(self, text_value: str | None) -> float | None:
-        if not text_value:
-            return None
-        normalized = (text_value.replace('"', "")
-                      .replace("''", "")
-                      .replace("″", "")
-                      .replace("“", "")
-                      .replace(",", ".")
-                      .strip())
-        try:
-            return float(normalized)
-        except ValueError:
-            return None
-
     def _get_images(self, element: WebDriver, selector: Selector) -> list[str]:
         try:
             img_tags = element.find_elements(By.XPATH, selector.root)
@@ -145,26 +132,6 @@ class SeleniumParser:
             return list(filter(None, images))
         except (NoSuchElementException, AttributeError):
             return []
-
-    def _safe_to_int(self, value: str | None) -> int | None:
-        if value is None:
-            return None
-        try:
-            normalized = re.sub(r"[\s\u00a0\u202f]", "", value)
-            return int(normalized)
-        except ValueError:
-            return None
-
-    def _safe_to_float(self, value: str | None) -> float | None:
-        if value is None:
-            return None
-        try:
-            normalized = re.sub(r"[\s\u00a0\u202f]", "", value)
-            normalized = normalized.replace(",", ".")
-            normalized = re.sub(r"[^\d.\-]", "", normalized)
-            return float(normalized)
-        except ValueError:
-            return None
 
     def _get_specifications(
             self,
@@ -207,7 +174,7 @@ def main() -> None:
     driver = webdriver.Firefox()
 
     try:
-        parser = SeleniumParser(driver)
+        parser = SeleniumScraper(driver)
         parser.run("Apple iPhone 15 128GB Black")
     finally:
         driver.quit()

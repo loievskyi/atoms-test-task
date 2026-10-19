@@ -1,3 +1,9 @@
+"""
+Web scraping selectors schema for product parsing
+These classes define selectors for extracting product data,
+specifications, search functionality, and product listings from HTML pages
+"""
+
 from pydantic import BaseModel, RootModel
 
 

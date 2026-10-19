@@ -1,3 +1,9 @@
+"""
+Abstract base parser with utility methods for data normalization
+Provides: safe conversion to int/float (handles spaces, commas, special chars),
+diagonal inches extraction (removes quote variants)
+"""
+
 import re
 from abc import ABC
 
